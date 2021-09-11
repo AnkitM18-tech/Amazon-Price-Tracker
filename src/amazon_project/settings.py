@@ -31,7 +31,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['amazon-price-tracker-01.herokuapp.com' , '127.0.0.8000']
+ALLOWED_HOSTS = ['amazon-price-tracker-01.herokuapp.com' , '127.0.0.1']
 
 
 # Application definition
