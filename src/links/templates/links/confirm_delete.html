@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p style="text-align:center;">Are You sure You want to delete the link : "{{object.name}}" ?</p>
+        <div class="d-grid gap-2 col-2 mx-auto">
+            <button class="btn btn-outline-success" type="submit">Yes</button>
+        </div>
+    </form>
+{% endblock content %}
