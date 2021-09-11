@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load colorize %}
+{% block content %}
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add an Item for Tracking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" autocomplete="off">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="d-grip col-2 gap-2 mx-auto"><button type="submit" class="btn btn-primary mt-3">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">Add</button>
+            <a href="{% url 'update' %}">
+                <button class="btn btn-outline-info">Update</button>
+            </a>
+        </div>
+        <div class="col" style="text-align:right;">
+            <div style="font-weight:bold;">The Total Number of Items being tracked : <span style="color:blue; font-size:18px;">{{no_of_items}}</span></div>
+            <div style="font-weight:bold;">Discounted Items : <span style="color:green; font-size:18px;">{{no_of_discounted}}</span></div>
+        </div>
+    </div>
+    {% if qs %}
+        {% for item in qs %}
+            <div class="card mt-3">
+                <div class="card-header" style="display:flex;">
+                    <h5>{{ item.name }}</h5>
+                    <a href="{% url 'delete' item.pk %}" style="margin-left:50px;"><button class="btn btn-outline-danger">Delete?</button></a>
+                </div>
+                <div class="card-body">
+                    <div class="blockquote">
+                        <div>Current Price (&#8377;) : {{ item.current_price }}</div>
+                        <div>Old Price (&#8377;) : {{ item.old_price }}</div>
+                        <div>Difference (&#8377;) : {{ item.price_difference | colorize }}</div>
+                        <div>Link : <a href="{{ item.url }}">{{ item.url }}</a></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Number of Items being tracked ...</h3>
+    {% endif %}
+{% endblock content %}
